@@ -1,0 +1,25 @@
+				@font-face {
+					font-family: 'bebas-neue';
+					src: url('/wp-content/uploads/useanyfont/7803Bebas-Neue.woff2') format('woff2'),
+						url('/wp-content/uploads/useanyfont/7803Bebas-Neue.woff') format('woff');
+					  font-display: auto;
+				}
+
+				.bebas-neue{font-family: 'bebas-neue' !important;}
+
+						#n2-ss-5item14{
+					font-family: 'bebas-neue' !important;
+				}
+						#n2-ss-5item18{
+					font-family: 'bebas-neue' !important;
+				}
+						#n2-ss-5item2{
+					font-family: 'bebas-neue' !important;
+				}
+						#n2-ss-5item10{
+					font-family: 'bebas-neue' !important;
+				}
+						#n2-ss-5item6{
+					font-family: 'bebas-neue' !important;
+				}
+		

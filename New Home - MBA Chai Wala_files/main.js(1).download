@@ -1,0 +1,218 @@
+(function ($) {
+    'use strict';
+
+    /*------------- preloader js --------------*/
+	function loader() {
+		$(window).on('load', function () {
+			$('.header-mini-cart .button').addClass('site-btn');
+			$('.header-mini-cart .checkout').addClass('site-btn__borderd');
+
+			$('#ctn-preloader').addClass('loaded');
+			$("#loading").fadeOut(500);
+			// Una vez haya terminado el preloader aparezca el scroll
+
+			if ($('#ctn-preloader').hasClass('loaded')) {
+				// Es para que una vez que se haya ido el preloader se elimine toda la seccion preloader
+				$('#preloader').delay(200).queue(function () {
+					$(this).remove();
+				});
+			}
+
+		});
+	}
+	loader();
+
+	$(window).on("load", function () {
+		background();
+	});
+
+	// scroll to top js
+	var scroll = $(".go-top");
+	scroll.on('click', function() {
+		$('html , body').animate({
+			scrollTop: 0
+		}, 300);
+	});
+
+    // background image js
+	function background() {
+			var img = $('.bg_img');
+			img.css('background-image', function () {
+			var bg = ('url(' + $(this).data('background') + ')');
+			return bg;
+		});
+	}
+
+	$("[data-bg-color]").each(function () {
+		$(this).css("background-color", $(this).attr("data-bg-color"));
+	});
+
+	// active mobile-menu
+	jQuery('#mobile-menu, #navbar').meanmenu({
+		meanScreenWidth: '991',
+		meanMenuContainer: '.mobile-menu'
+	});
+
+	// MENU MIDDLE OPTION
+	function siteMiddleLogoSetting() {
+        if(($(".header-right-on").length) && (window.innerWidth > 991) && ($("#navbar > ul").length)) {
+
+            var nav = $("#navbar > ul");
+            var navLi = nav.find(">li");
+
+            if(navLi.length > 1) {
+                var midLastLi = nav.find(">li:nth-child(" + Math.ceil(navLi.length / 2) + ")");
+                var logo = $(".navbar-brand");
+                var logoWidth = $(".navbar-brand").innerWidth();
+                $( "<li class='logo-middle'></li>" ).insertAfter( midLastLi ).append(logo);
+            } else if(navLi.length == 1) {
+                nav.find(">li:first-child").css({
+                    "left": -70 + "px"
+                })
+            }
+        } else if(($(".header-right-on").length) && (window.innerWidth < 992) && ($("#navbar > ul").length)) {
+            var logo = $(".header-right-on .logo");
+            var navOpenBtn = $(".navbar-header button");
+            navOpenBtn.after(logo);
+        }
+    }
+
+    siteMiddleLogoSetting();
+
+	// toggle search bar
+	$('.search .search__trigger .open').click(function () {
+		$(".search .search__trigger .open").hide();
+		$(".search .search__trigger .close").show();
+		$('.search__form').addClass('active');
+	});
+	$('.search .search__trigger .close').click(function () {
+		$(".search .search__trigger .open").show();
+		$(".search .search__trigger .close").hide();
+		$('.search__form').removeClass('active');
+	});
+
+	// Side menu info
+	$(".hamburger-trigger").on("click", function (e) {
+		e.preventDefault();
+		$(".side-info-wrapper").toggleClass("show");
+		$("body").addClass("on-side");
+		$('.cafena-overlay').addClass('active');
+		$(this).addClass('active');
+	});
+
+	$(".side-info__close > a").on("click", function (e) {
+		e.preventDefault();
+		$(".side-info-wrapper").removeClass("show");
+		$("body").removeClass("on-side");
+		$('.cafena-overlay').removeClass('active');
+		$('.hamburger-trigger').removeClass('active');
+	});
+
+	$('.cafena-overlay').on('click', function () {
+		$(this).removeClass('active');
+		$(".side-info-wrapper").removeClass("show");
+		$("body").removeClass("on-side");
+		$('.hamburger-trigger').removeClass('active');
+	});
+
+	// cart info
+	$(".cart-trigger").on("click", function (e) {
+		e.preventDefault();
+		$(".cart-bar-wrapper").toggleClass("show");
+		$("body").addClass("on-side");
+		$('.cafena-overlay').addClass('active');
+		$(this).addClass('active');
+	});
+
+	$(".cart-bar__close > a").on("click", function (e) {
+		e.preventDefault();
+		$(".cart-bar-wrapper").removeClass("show");
+		$("body").removeClass("on-side");
+		$('.cafena-overlay').removeClass('active');
+		$('.cart-trigger').removeClass('active');
+	});
+
+	$('.cafena-overlay').on('click', function () {
+		$(this).removeClass('active');
+		$(".cart-bar-wrapper").removeClass("show");
+		$("body").removeClass("on-side");
+		$('.cart-trigger').removeClass('active');
+	});
+
+	// gallery post slider
+	$('.gallery_post_active').owlCarousel({
+		loop: true,
+		margin: 0,
+		items: 1,
+		navText: ['<i class="far fa-chevron-left"></i>', '<i class="far fa-chevron-right"></i>'],
+		nav: true,
+		dots: false,
+		responsive: {
+			0: {
+				items: 1
+			}
+		}
+	})
+
+	//  product popup
+	$('.cafena-overlay,.product-p-close').on('click',function() {
+		$('.cafena-overlay, .popup-coffe-mechine, .product-popup').removeClass('show-popup');
+	});
+
+	// Activate lightcase
+	$('a[data-rel^=lightcase]').lightcase();
+
+	// isotop active
+	$('.popular-menu__grid').imagesLoaded(function () {
+		// init Isotope
+		var $grid = $('.popular-menu__grid').isotope({
+			itemSelector: '.grid-item',
+			percentPosition: true,
+			masonry: {
+				columnWidth: '.grid-sizer'
+			}
+		});
+
+		// filter items on button click
+		$('.popular-menu__filter').on('click', 'button', function () {
+			var filterValue = $(this).attr('data-filter');
+			$grid.isotope({ filter: filterValue });
+		});
+
+	});
+
+	// isotop masonary active
+	$('.popular-menu__masonary').imagesLoaded(function () {
+		// init Isotope
+		var $grid = $('.popular-menu__masonary').isotope({
+			itemSelector: '.popular-menu__item',
+			percentPosition: true,
+			masonry: {
+				columnWidth: '.popular-menu__item',
+				horizontalOrder: true,
+			}
+		});
+
+		// filter items on button click
+		$('.popular-menu__filter').on('click', 'button', function () {
+			var filterValue = $(this).attr('data-filter');
+			$grid.isotope({ filter: filterValue });
+		});
+
+	});
+
+	//for menu active class
+	$('.popular-menu__filter button').on('click', function (event) {
+		$(this).siblings('.active').removeClass('active');
+		$(this).addClass('active');
+		event.preventDefault();
+	});
+
+	$('.pp__item').on('mouseenter', function () {
+		$(this).addClass('active').parent().siblings().find('.pp__item').removeClass('active');
+	});
+
+	//Nice Select Js
+	$('.woocommerce-ordering select, .product-details__content select').niceSelect();
+
+})(jQuery);
